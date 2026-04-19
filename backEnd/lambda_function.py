@@ -6,7 +6,7 @@ from calculos import calcular_viabilidad
 ALLOWED_ORIGIN = "https://www.su-dominio.com"
 
 HEADERS = {
-    "Access-Control-Allow-Origin":  ALLOWED_ORIGIN,
+    "Access-Control-Allow-Origin":  "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type":                 "application/json",

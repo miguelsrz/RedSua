@@ -1,5 +1,5 @@
 // Reemplazar con la URL real de API Gateway
-const API_BASE = "https://XXXXXXXX.execute-api.us-east-1.amazonaws.com";
+const API_BASE = "/api";
 
 const cop = n =>
   new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(n);
