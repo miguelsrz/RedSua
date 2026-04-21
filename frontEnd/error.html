@@ -3,18 +3,246 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>404 – Pagina no encontrada</title>
+  <title>404 – RedSua</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --amber:   #F59E0B;
+      --amber-d: #D97706;
+      --amber-l: #FDE68A;
+      --orange:  #EA580C;
+      --dark:    #0C0A09;
+      --dark2:   #1C1917;
+      --dark3:   #292524;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: #E7E5E4;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    h1, h2, .playfair { font-family: 'Playfair Display', serif; }
+
+    /* ── BACKGROUND ──────────────────────────────────────────── */
+    .bg-radial {
+      position: fixed; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 55%, #3D1500 0%, #1C0A00 35%, #0C0A09 100%);
+    }
+    /* grain */
+    .bg-radial::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: .4; pointer-events: none;
+    }
+
+    /* Sun glow — centrado y sutil */
+    .sun-glow {
+      position: fixed;
+      left: 50%; top: 46%;
+      transform: translate(-50%, -50%);
+      width: min(70vw, 600px);
+      height: min(70vw, 600px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(251,191,36,.10) 0%, rgba(234,88,12,.06) 40%, transparent 70%);
+      animation: pulse 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .sun-ring {
+      position: fixed;
+      left: 50%; top: 46%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(245,158,11,.08);
+      animation: expand-ring 9s ease-out infinite;
+      pointer-events: none;
+    }
+    .sun-ring:nth-child(1) { width: min(52vw,460px); height: min(52vw,460px); animation-delay: 0s; }
+    .sun-ring:nth-child(2) { width: min(64vw,560px); height: min(64vw,560px); animation-delay: 3s; opacity:.6; }
+    .sun-ring:nth-child(3) { width: min(76vw,660px); height: min(76vw,660px); animation-delay: 6s; opacity:.3; }
+    @keyframes pulse {
+      0%,100% { transform:translate(-50%,-50%) scale(1);    opacity:1; }
+      50%      { transform:translate(-50%,-50%) scale(1.06); opacity:.75; }
+    }
+    @keyframes expand-ring {
+      0%   { transform:translate(-50%,-50%) scale(.94); opacity:.5; }
+      100% { transform:translate(-50%,-50%) scale(1.08); opacity:0; }
+    }
+
+    /* ── NAVBAR ──────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      background: rgba(12,10,9,.7); backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(245,158,11,.1);
+    }
+    .nav-link {
+      position:relative; font-size:.875rem; font-weight:500;
+      color:#D6D3D1; letter-spacing:.03em; transition:color .2s; text-decoration:none;
+    }
+    .nav-link::after {
+      content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
+      background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .3s;
+    }
+    .nav-link:hover { color:var(--amber-l); }
+    .nav-link:hover::after { transform:scaleX(1); }
+
+    /* ── BUTTONS ─────────────────────────────────────────────── */
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:linear-gradient(135deg,var(--amber),var(--amber-d));
+      color:#0C0A09; font-weight:700; font-size:.9rem;
+      padding:.85rem 2rem; border-radius:12px; text-decoration:none;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,158,11,.35); }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:transparent; color:#D6D3D1; font-weight:500; font-size:.9rem;
+      padding:.85rem 2rem; border-radius:12px; border:1px solid rgba(255,255,255,.15);
+      text-decoration:none; transition:border-color .2s,color .2s,transform .2s;
+    }
+    .btn-ghost:hover { border-color:rgba(245,158,11,.4); color:var(--amber-l); transform:translateY(-2px); }
+
+    /* ── 404 NUMBER ──────────────────────────────────────────── */
+    .giant-404 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 22vw, 16rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, rgba(245,158,11,.18), rgba(234,88,12,.08));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
+      letter-spacing: -.04em;
+    }
+
+    /* ── SOLAR BADGE ─────────────────────────────────────────── */
+    .solar-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25);
+      border-radius:999px; padding:.4rem 1.1rem; font-size:.78rem; font-weight:600;
+      color:var(--amber); letter-spacing:.06em; text-transform:uppercase;
+    }
+
+    /* ── CONTENT ENTRANCE ────────────────────────────────────── */
+    .content-enter {
+      opacity: 0; transform: translateY(24px);
+      animation: enter .8s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .content-enter:nth-child(1) { animation-delay:.1s; }
+    .content-enter:nth-child(2) { animation-delay:.25s; }
+    .content-enter:nth-child(3) { animation-delay:.4s; }
+    .content-enter:nth-child(4) { animation-delay:.55s; }
+    @keyframes enter {
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── QUICK LINKS ─────────────────────────────────────────── */
+    .quick-link {
+      display:flex; align-items:center; gap:.75rem;
+      padding:.7rem 1.1rem; border-radius:12px; text-decoration:none;
+      color:#A8A29E; font-size:.875rem; font-weight:500;
+      background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);
+      transition:background .2s,border-color .2s,color .2s,transform .2s;
+    }
+    .quick-link:hover {
+      background:rgba(245,158,11,.07);
+      border-color:rgba(245,158,11,.18);
+      color:var(--amber-l);
+      transform:translateX(4px);
+    }
+    .quick-link svg { flex-shrink:0; }
+
+    /* Mobile menu */
+    #mobile-menu { background:rgba(12,10,9,.97); backdrop-filter:blur(16px); }
+  </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center text-center px-6">
-  <div>
-    <p class="text-5xl mb-4">☀️</p>
-    <h1 class="text-4xl font-extrabold text-blue-900 mb-2">404</h1>
-    <p class="text-slate-500 mb-6">Pagina no encontrada.</p>
-    <a href="/index.html"
-       class="inline-block bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-xl text-sm">
-      Volver al inicio
-    </a>
+<body>
+
+<!-- Background layers -->
+<div class="bg-radial"></div>
+<div class="sun-glow"></div>
+<div class="sun-ring"></div>
+<div class="sun-ring"></div>
+<div class="sun-ring"></div>
+
+
+<!-- MAIN CONTENT  -->
+<main class="relative z-10 min-h-screen flex items-center justify-center px-6 py-24">
+  <div class="max-w-xl w-full text-center">
+
+    <!-- 404 bien grande -->
+    <div class="content-enter">
+      <div class="giant-404">404</div>
+    </div>
+
+    <!-- Badge + título -->
+    <div class="content-enter">
+      <div class="solar-badge mx-auto mb-5">☀ Página no encontrada</div>
+      <h1 class="text-3xl md:text-4xl font-black leading-tight mb-4" style="letter-spacing:-.02em;">
+        Esta ruta no<br/>
+        <span style="background:linear-gradient(135deg,var(--amber-l),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+          genera energía :)
+        </span>
+      </h1>
+      <p class="text-stone-500 text-base leading-relaxed max-w-sm mx-auto">
+        La página que buscas no existe o fue movida.
+        Intenta con alguno de estos destinos.
+      </p>
+    </div>
+
+    <!-- Quick links -->
+    <div class="content-enter mt-8 space-y-2 text-left max-w-xs mx-auto">
+      <a href="index.html" class="quick-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Ir al inicio
+      </a>
+      <a href="simulador.html" class="quick-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        Abrir el simulador
+      </a>
+      <a href="investigacion.html" class="quick-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Ver la investigación
+      </a>
+    </div>
+
+    <!-- CTA principal -->
+    <div class="content-enter mt-10">
+      <a href="index.html" class="btn-primary justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Volver al inicio
+      </a>
+    </div>
+
   </div>
+</main>
+
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+    document.getElementById('icon-open').classList.toggle('hidden');
+    document.getElementById('icon-close').classList.toggle('hidden');
+  }
+</script>
+
 </body>
 </html>
