@@ -265,25 +265,28 @@
 
 <!-- NAVBAR -->
 <nav id="navbar" class="px-6 py-5 flex items-center justify-between">
-  <a href="index.html" class="flex items-center gap-2.5 no-underline">
-    <div class="w-8 h-8 rounded-lg flex items-center justify-center"
-         style="background:linear-gradient(135deg,#F59E0B,#EA580C);">
+  <!-- Logo -->
+  <a href="index.html" class="flex items-center gap-2.5 no-underline group">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center relative overflow-hidden"
+         style="background: linear-gradient(135deg,#F59E0B,#EA580C);">
       <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="4"/>
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
       </svg>
     </div>
-    <span class="font-bold text-lg tracking-tight text-white" style="font-family:'Playfair Display',serif;">
+    <span class="font-bold text-xl tracking-tight text-white" style="font-family:'Playfair Display',serif;">
       Red<span style="color:var(--amber)">Sua</span>
     </span>
   </a>
 
+  <!-- Desktop links -->
   <div class="hidden md:flex items-center gap-8">
-    <a href="index.html"         class="nav-link">Inicio</a>
-    <a href="simulador.html"     class="nav-link">Simulador</a>
-    <a href="investigacion.html" class="nav-link" style="color:var(--amber)">Investigación</a>
+    <a href="index.html"      class="nav-link" style="color:var(--amber)">Inicio</a>
+    <a href="simulador.html"  class="nav-link">Simulador</a>
+    <a href="investigacion.html" class="nav-link">Investigación</a>
   </div>
 
+  <!-- Desktop CTA -->
   <div class="hidden md:flex items-center gap-3">
     <a href="simulador.html" class="btn-primary text-sm px-5 py-2.5">
       Calcular ahorro
@@ -293,9 +296,14 @@
     </a>
   </div>
 
-  <button class="md:hidden text-white p-2" onclick="toggleMenu()">
-    <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+  <!-- Mobile hamburger -->
+  <button id="menu-btn" class="md:hidden text-white p-2" onclick="toggleMenu()">
+    <svg id="icon-open"  class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <svg id="icon-close" class="w-8 h-8 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M6 18L18 6M6 6l12 12"/>
+    </svg>
   </button>
 </nav>
 
@@ -1111,6 +1119,7 @@
   <div class="max-w-6xl mx-auto">
     <div class="grid md:grid-cols-4 gap-10 mb-12">
 
+      <!-- Brand -->
       <div class="md:col-span-1">
         <div class="flex items-center gap-2 mb-4">
           <div class="w-7 h-7 rounded-lg flex items-center justify-center"
@@ -1128,6 +1137,7 @@
         </p>
       </div>
 
+      <!-- Navegación -->
       <div>
         <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Plataforma</h4>
         <div class="space-y-2.5">
@@ -1137,6 +1147,7 @@
         </div>
       </div>
 
+      <!-- Recursos -->
       <div>
         <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Recursos</h4>
         <div class="space-y-2.5">
@@ -1146,8 +1157,7 @@
             </svg>
             Repositorio GitHub
           </a>
-          <a href="https://drive.google.com/file/d/1ohoJdk2vhKSOjxCHKttlZJj_u04H1z8S/view?usp=sharing"
-             target="_blank" class="footer-link block">
+          <a href="https://drive.google.com/file/d/1ohoJdk2vhKSOjxCHKttlZJj_u04H1z8S/view?usp=sharing" target="_blank" class="footer-link block">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
             </svg>
@@ -1168,6 +1178,7 @@
         </div>
       </div>
 
+      <!-- Equipo -->
       <div>
         <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Equipo de Trabajo</h4>
         <div class="space-y-1.5 text-xs text-stone-500">
@@ -1175,11 +1186,13 @@
           <p>S. Alape   · S. Cardenas</p>
           <p>J. Palacio · S. Parra</p>
         </div>
+       
       </div>
     </div>
 
+    <!-- Bottom bar -->
     <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
-         style="border-top:1px solid rgba(255,255,255,.05);">
+         style="border-top:1px solid rgba(255,255,255,0.05);">
       <p class="text-xs text-stone-600">
         2026 RedSua · Universidad Nacional de Colombia · Ingeniería Económica 2026-1S
       </p>
