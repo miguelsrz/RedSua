@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RedSua - Simulador</title>
+  <title>RedSua – Simulador</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
+    /*  TOKENS  */
     :root {
       --amber:   #F59E0B;
       --amber-d: #D97706;
@@ -19,8 +20,17 @@
       --dark:    #0C0A09;
       --dark2:   #1C1917;
       --dark3:   #292524;
-      --cream:   #FEF3C7;
       --muted:   #A8A29E;
+      /* Paleta semántica para resultados */
+      --c-green:   #6EE7B7;
+      --c-green-bg:rgba(16,185,129,.07);
+      --c-green-br:rgba(16,185,129,.22);
+      --c-red:     #FCA5A5;
+      --c-red-bg:  rgba(239,68,68,.07);
+      --c-red-br:  rgba(239,68,68,.22);
+      --c-blue:    #93C5FD;
+      --c-blue-bg: rgba(59,130,246,.07);
+      --c-blue-br: rgba(59,130,246,.22);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -32,15 +42,15 @@
     }
     h1,h2,h3,.playfair { font-family:'Playfair Display',serif; }
 
-    /* NAVBAR */
+    /*  NAVBAR  */
     #navbar {
-      position: fixed; top:0; left:0; right:0; z-index:100;
-      transition: background .4s, backdrop-filter .4s, box-shadow .4s;
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      transition:background .4s,backdrop-filter .4s,box-shadow .4s;
     }
     #navbar.scrolled {
-      background: rgba(12,10,9,.92);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 1px 0 rgba(245,158,11,.15);
+      background:rgba(12,10,9,.92);
+      backdrop-filter:blur(12px);
+      box-shadow:0 1px 0 rgba(245,158,11,.15);
     }
     .nav-link {
       position:relative; font-size:.875rem; font-weight:500;
@@ -48,32 +58,24 @@
     }
     .nav-link::after {
       content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
-      background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+      background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .3s;
     }
     .nav-link:hover { color:var(--amber-l); }
     .nav-link:hover::after { transform:scaleX(1); }
 
-    /* BUTTONS */
+    /*  BOTONES  */
     .btn-primary {
       display:inline-flex; align-items:center; gap:.5rem;
       background:linear-gradient(135deg,var(--amber),var(--amber-d));
       color:#0C0A09; font-weight:700; font-size:.9rem;
       padding:.85rem 2rem; border-radius:12px; text-decoration:none;
       border:none; cursor:pointer;
-      transition:transform .2s, box-shadow .2s, opacity .2s;
+      transition:transform .2s,box-shadow .2s,opacity .2s;
     }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,158,11,.35); }
+    .btn-primary:hover  { transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,158,11,.35); }
     .btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
-    .btn-ghost {
-      display:inline-flex; align-items:center; gap:.5rem;
-      background:transparent; color:#E7E5E4; font-weight:500; font-size:.9rem;
-      padding:.85rem 2rem; border-radius:12px; border:1px solid rgba(255,255,255,.2);
-      text-decoration:none; cursor:pointer;
-      transition:border-color .2s, color .2s, transform .2s;
-    }
-    .btn-ghost:hover { border-color:rgba(245,158,11,.5); color:var(--amber-l); transform:translateY(-2px); }
 
-    /* GRADIENT TEXT */
+    /*  GRADIENTS  */
     .gradient-text {
       background:linear-gradient(135deg,var(--amber-l),var(--orange));
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
@@ -88,125 +90,158 @@
       border-radius:999px; padding:.4rem 1.1rem; font-size:.78rem; font-weight:600;
       color:var(--amber); letter-spacing:.06em; text-transform:uppercase;
     }
+    .section-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(245,158,11,.15),transparent); }
 
-    /* FORM */
-    .form-card {
-      background:var(--dark2);
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:24px; padding:2.5rem;
-    }
-    .input-label {
-      display:block; font-size:.72rem; font-weight:600;
-      text-transform:uppercase; letter-spacing:.07em;
-      color:#78716C; margin-bottom:.5rem;
-    }
-    .input-field {
-      width:100%; background:var(--dark3);
-      border:1px solid rgba(255,255,255,.08); border-radius:12px;
-      padding:.75rem 1rem; font-size:.9rem; color:#E7E5E4;
-      font-family:'DM Sans',sans-serif;
-      transition:border-color .2s, box-shadow .2s;
-      outline:none;
-    }
-    .input-field:focus {
-      border-color:rgba(245,158,11,.5);
-      box-shadow:0 0 0 3px rgba(245,158,11,.08);
-    }
-    .input-field:disabled {
-      opacity:.45; cursor:not-allowed;
-    }
-    .input-hint { font-size:.72rem; color:#57534E; margin-top:.35rem; }
-
-    /* KPI CARDS */
-    .kpi-card {
-      background:linear-gradient(135deg,rgba(245,158,11,.07),rgba(28,25,23,.8));
-      border:1px solid rgba(245,158,11,.14);
-      border-radius:18px; padding:1.5rem;
-      transition:transform .3s, border-color .3s, box-shadow .3s;
-    }
-    .kpi-card:hover {
-      transform:translateY(-3px);
-      border-color:rgba(245,158,11,.3);
-      box-shadow:0 10px 35px rgba(245,158,11,.07);
-    }
-    .kpi-value {
-      font-family:'Playfair Display',serif;
-      font-size:1.75rem; font-weight:900; line-height:1.1;
-      color:var(--amber);
-    }
-    .kpi-label { font-size:.72rem; color:#78716C; text-transform:uppercase; letter-spacing:.06em; margin-top:.35rem; }
-
-    /* VIABLE BADGE */
-    .badge-viable {
-      display:inline-flex; align-items:center; gap:.6rem;
-      padding:.6rem 1.4rem; border-radius:999px; font-weight:700; font-size:.9rem;
-    }
-    .badge-si { background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.3); color:#6EE7B7; }
-    .badge-no { background:rgba(239,68,68,.12);  border:1px solid rgba(239,68,68,.3);  color:#FCA5A5; }
-
-    /* TABLE */
-    .results-table { width:100%; border-collapse:collapse; font-size:.82rem; }
-    .results-table thead tr { background:rgba(245,158,11,.08); }
-    .results-table th {
-      padding:.75rem 1rem; text-align:right; font-size:.7rem;
-      text-transform:uppercase; letter-spacing:.06em; color:#78716C; font-weight:600;
-    }
-    .results-table th:first-child { text-align:center; }
-    .results-table td {
-      padding:.6rem 1rem; text-align:right;
-      border-bottom:1px solid rgba(255,255,255,.04); color:#D6D3D1;
-    }
-    .results-table td:first-child { text-align:center; font-weight:600; color:#E7E5E4; }
-    .results-table tr:hover td { background:rgba(245,158,11,.03); }
-    .row-recovered td { background:rgba(16,185,129,.05) !important; color:#6EE7B7 !important; }
-    .row-recovered td:first-child { color:#6EE7B7 !important; }
-
-    /* CHART CONTAINER */
-    .chart-box {
-      background:var(--dark2); border:1px solid rgba(255,255,255,.06);
-      border-radius:20px; padding:1.75rem;
-    }
-    .chart-title {
-      font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
-      color:#78716C; font-weight:600; margin-bottom:1.25rem;
-    }
-
-    /* TABS */
-    .tab-btn {
-      padding:.5rem 1.25rem; border-radius:8px; font-size:.82rem; font-weight:500;
-      border:none; cursor:pointer; transition:background .2s, color .2s;
-      background:transparent; color:#78716C;
-    }
-    .tab-btn.active {
-      background:rgba(245,158,11,.12);
-      color:var(--amber);
-      border:1px solid rgba(245,158,11,.2);
-    }
-    .tab-btn:not(.active):hover { color:#D6D3D1; }
-
-    /* HERO PAGE */
+    /*  PAGE HERO  */
     .page-hero {
       background:linear-gradient(135deg,#1a0900 0%,#0C0A09 60%);
       border-bottom:1px solid rgba(245,158,11,.1);
     }
 
-    /* TOOLTIP CUSTOM */
+    /*  FORMULARIO  */
+    .form-card {
+      background:var(--dark2); border:1px solid rgba(255,255,255,.07);
+      border-radius:24px; padding:2rem;
+    }
+    .input-label {
+      display:block; font-size:.7rem; font-weight:600;
+      text-transform:uppercase; letter-spacing:.07em;
+      color:#78716C; margin-bottom:.45rem;
+    }
+    .input-field {
+      width:100%; background:var(--dark3);
+      border:1px solid rgba(255,255,255,.08); border-radius:12px;
+      padding:.7rem 1rem; font-size:.9rem; color:#E7E5E4;
+      font-family:'DM Sans',sans-serif;
+      transition:border-color .2s,box-shadow .2s; outline:none;
+      font-size: max(.9rem, 16px);
+    }
+    .input-field:focus {
+      border-color:rgba(245,158,11,.5);
+      box-shadow:0 0 0 3px rgba(245,158,11,.08);
+    }
+    .input-field:disabled { opacity:.4; cursor:not-allowed; }
+    .input-hint { font-size:.68rem; color:#57534E; margin-top:.3rem; }
+
+    /* Tooltip */
     .info-tooltip { position:relative; display:inline-flex; align-items:center; cursor:help; }
     .info-tooltip .tip {
       position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%);
       background:var(--dark3); border:1px solid rgba(245,158,11,.2);
-      border-radius:8px; padding:.5rem .75rem; font-size:.72rem; color:#D6D3D1;
+      border-radius:8px; padding:.45rem .7rem; font-size:.68rem; color:#D6D3D1;
       white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s; z-index:10;
     }
     .info-tooltip:hover .tip { opacity:1; }
 
-    /* SCROLL REVEAL */
-    .reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-    .rd1 { transition-delay:.1s; } .rd2 { transition-delay:.2s; }
-    .rd3 { transition-delay:.3s; } .rd4 { transition-delay:.4s; }
+    /* Preview box */
+    .preview-box {
+      background:rgba(245,158,11,.05); border:1px solid rgba(245,158,11,.12);
+      border-radius:14px; padding:1rem;
+    }
+    .preview-val {
+      font-size:.95rem; font-weight:700; color:var(--amber);
+      font-family:'Playfair Display',serif;
+    }
 
-    /* FOOTER */
+    /* Spinner */
+    .spinner {
+      width:18px; height:18px; border-radius:50%;
+      border:2px solid rgba(245,158,11,.2); border-top-color:var(--amber);
+      animation:spin .7s linear infinite; display:none; flex-shrink:0;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /*  KPI GRID  */
+    .kpi-card {
+      border-radius:18px; padding:1.25rem;
+      transition:transform .3s,box-shadow .3s;
+      cursor:default;
+    }
+    .kpi-card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
+    .kpi-value {
+      font-family:'Playfair Display',serif;
+      font-weight:900; line-height:1.1;
+    }
+    .kpi-label {
+      font-size:.65rem; text-transform:uppercase; letter-spacing:.06em;
+      color:#78716C; margin-top:.3rem;
+    }
+
+    /*  BADGE VIABLE  */
+    .badge-viable {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.55rem 1.25rem; border-radius:999px; font-weight:700; font-size:.85rem;
+    }
+    .badge-si { background:var(--c-green-bg); border:1px solid var(--c-green-br); color:var(--c-green); }
+    .badge-no { background:var(--c-red-bg);   border:1px solid var(--c-red-br);   color:var(--c-red);   }
+
+    /*  SECCIONES DE RESULTADO  */
+    .result-section {
+      background:var(--dark2); border:1px solid rgba(255,255,255,.06);
+      border-radius:20px; padding:1.5rem;
+    }
+    .result-section-title {
+      font-size:.68rem; text-transform:uppercase; letter-spacing:.08em;
+      color:#78716C; font-weight:600; margin-bottom:1rem;
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .result-section-title::after {
+      content:''; flex:1; height:1px; background:rgba(255,255,255,.05);
+    }
+
+    /*  TABS  */
+    .tabs-wrap {
+      display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.5rem;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      /* ocultar scrollbar */
+      scrollbar-width:none;
+    }
+    .tabs-wrap::-webkit-scrollbar { display:none; }
+    .tab-btn {
+      white-space:nowrap; padding:.45rem 1.1rem; border-radius:8px;
+      font-size:.8rem; font-weight:500; border:1px solid transparent;
+      cursor:pointer; transition:background .2s,color .2s,border-color .2s;
+      background:transparent; color:#78716C; flex-shrink:0;
+    }
+    .tab-btn.active {
+      background:rgba(245,158,11,.12); color:var(--amber);
+      border-color:rgba(245,158,11,.2);
+    }
+    .tab-btn:not(.active):hover { color:#D6D3D1; }
+
+    /*  TABLA  */
+    .results-table { width:100%; border-collapse:collapse; font-size:.8rem; }
+    .results-table thead tr { background:rgba(245,158,11,1); position:sticky; top:0; z-index:1; }
+    .results-table th {
+      padding:.6rem .9rem; text-align:right; font-size:.67rem;
+      text-transform:uppercase; letter-spacing:.06em; color:#0B0908; font-weight:600;
+    }
+    .results-table th:first-child { text-align:center; }
+    .results-table td {
+      padding:.55rem .9rem; text-align:right;
+      border-bottom:1px solid rgba(255,255,255,.04); color:#D6D3D1;
+    }
+    .results-table td:first-child { text-align:center; font-weight:600; color:#E7E5E4; }
+    .results-table tr:hover td { background:rgba(245,158,11,.03); }
+    .row-recovered td { background:rgba(16,185,129,.06) !important; }
+    .row-recovered td { color:var(--c-green) !important; }
+
+    /*  CHART BOX  */
+    .chart-box { background:var(--dark2); border:1px solid rgba(255,255,255,.06); border-radius:20px; padding:1.5rem; }
+    .chart-desc { font-size:.75rem; color:#57534E; line-height:1.5; margin-bottom:1rem; }
+
+    /*  INTERPRETACIÓN  */
+    .interp-card {
+      background:rgba(245,158,11,.04); border:1px solid rgba(245,158,11,.12);
+      border-radius:20px; padding:1.5rem;
+    }
+    .interp-card .space-y-3 > p { color:#A8A29E; font-size:.85rem; line-height:1.65; }
+
+    /*  SCROLL REVEAL  */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /*  FOOTER  */
     footer { background:#080604; border-top:1px solid rgba(245,158,11,.1); }
     .footer-link {
       color:var(--muted); font-size:.875rem; text-decoration:none;
@@ -214,29 +249,25 @@
     }
     .footer-link:hover { color:var(--amber-l); }
 
-    /* mobile menu */
+    /*  MOBILE MENU  */
     #mobile-menu { background:rgba(12,10,9,.97); backdrop-filter:blur(16px); }
 
-    /* loading spinner */
-    .spinner {
-      width:20px; height:20px; border-radius:50%;
-      border:2px solid rgba(245,158,11,.2); border-top-color:var(--amber);
-      animation:spin .7s linear infinite; display:none;
+    /*  RESPONSIVE OVERRIDES  */
+    @media (max-width: 640px) {
+      .form-card { padding:1.5rem; }
+      .kpi-value { font-size:1.2rem !important; }
+      .result-section { padding:1.1rem; }
+      .chart-box { padding:1rem; }
     }
-    @keyframes spin { to { transform:rotate(360deg); } }
-
-    /* section divider */
-    .section-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(245,158,11,.15),transparent); }
   </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav id="navbar" class="px-6 py-5 flex items-center justify-between">
-  <!-- Logo -->
-  <a href="index.html" class="flex items-center gap-2.5 no-underline group">
-    <div class="w-8 h-8 rounded-lg flex items-center justify-center relative overflow-hidden"
-         style="background: linear-gradient(135deg,#F59E0B,#EA580C);">
+  <a href="index.html" class="flex items-center gap-2.5 no-underline">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+         style="background:linear-gradient(135deg,#F59E0B,#EA580C);">
       <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="4"/>
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
@@ -247,31 +278,22 @@
     </span>
   </a>
 
-  <!-- Desktop links -->
   <div class="hidden md:flex items-center gap-8">
-    <a href="index.html"      class="nav-link">Inicio</a>
-    <a href="simulador.html"  class="nav-link" style="color:var(--amber)">Simulador</a>
+    <a href="index.html"         class="nav-link">Inicio</a>
+    <a href="simulador.html"     class="nav-link" style="color:var(--amber)">Simulador</a>
     <a href="investigacion.html" class="nav-link">Investigación</a>
   </div>
 
-  <!-- Desktop CTA -->
-  <div class="hidden md:flex items-center gap-3">
-    <a href="simulador.html" class="btn-primary text-sm px-5 py-2.5">
-      Calcular ahorro
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </a>
-  </div>
+  <a href="simulador.html" class="btn-primary hidden md:inline-flex text-sm px-5 py-2.5">
+    Calcular ahorro
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
 
-  <!-- Mobile hamburger -->
-  <button id="menu-btn" class="md:hidden text-white p-2" onclick="toggleMenu()">
-    <svg id="icon-open"  class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path d="M4 6h16M4 12h16M4 18h16"/>
-    </svg>
-    <svg id="icon-close" class="w-8 h-8 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path d="M6 18L18 6M6 6l12 12"/>
-    </svg>
+  <button class="md:hidden text-white p-2" onclick="toggleMenu()">
+    <svg id="icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg id="icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
   </button>
 </nav>
 
@@ -287,38 +309,40 @@
 
 
 <!-- PAGE HERO -->
-<div class="page-hero pt-32 pb-16 px-6">
+<div class="page-hero pt-28 pb-14 px-6">
   <div class="max-w-6xl mx-auto">
-    <div class="solar-badge mb-6">⚡ Motor de cálculo en la nube</div>
-    <h1 class="text-5xl md:text-6xl font-black leading-tight mb-4" style="letter-spacing:-.02em;">
+    <div class="solar-badge mb-5">⚡ Cálculo en la nube</div>
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4" style="letter-spacing:-.02em;">
       Simulador de <span class="gradient-text">viabilidad solar</span>
     </h1>
-    <p class="text-stone-400 text-lg max-w-xl">
-      Ingresa los datos de tu proyecto y obtén en segundos el análisis económico
-      completo: VPN, TIR, período de recuperación y flujo de caja proyectado.
+    <p class="text-stone-400 text-base md:text-lg max-w-xl leading-relaxed">
+      Ingresa los datos de tu proyecto. La API calcula energía y ahorro;
+      el simulador obtiene en el cliente el VPN, período de recuperación
+      y el flujo de caja completo.
     </p>
   </div>
 </div>
-
 <div class="section-divider"></div>
 
 
 <!-- MAIN LAYOUT -->
-<main class="max-w-6xl mx-auto px-6 py-14">
-  <div class="grid lg:grid-cols-[400px_1fr] gap-10 items-start">
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+  <div class="grid lg:grid-cols-[380px_1fr] gap-8 items-start">
 
-    <!-- COLUMNA IZQUIERDA: FORMULARIO -->
-    <div class="lg:sticky lg:top-28">
-      <div class="form-card reveal">
+    <!--  FORMULARIO en columna izquierda -->
+    <div class="lg:sticky lg:top-28 space-y-3 reveal">
+
+      <!-- Card principal -->
+      <div class="form-card">
         <h2 class="text-xl font-bold mb-1">Parámetros</h2>
-        <p class="text-stone-500 text-sm mb-8">Todos los campos son requeridos.</p>
+        <p class="text-stone-500 text-sm mb-6">Todos los campos son requeridos.</p>
 
-        <!-- Ciudad -->
-        <div class="mb-5">
+        <!-- Ciudad por ahora fija en Bogotá -->
+        <div class="mb-4">
           <label class="input-label">
             Ciudad / Municipio
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Para obtener los datos de radiación del IDEAM</span>
+              ⓘ<span class="tip">Datos de radiación solar del IDEAM</span>
             </span>
           </label>
           <input type="text" value="Bogotá" disabled class="input-field"/>
@@ -326,52 +350,41 @@
         </div>
 
         <!-- Área -->
-        <div class="mb-5">
+        <div class="mb-4">
           <label class="input-label">
             Área disponible (m²)
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Superficie disponible para paneles (Ej: Techo del hogar)</span>
+              ⓘ<span class="tip">Superficie del techo disponible para paneles</span>
             </span>
           </label>
           <input type="number" id="area_m2" value="300" min="10" max="10000" step="10"
+                 inputmode="numeric"
                  class="input-field" oninput="actualizarPreview()"/>
-          <p class="input-hint">Rango sugerido: 50 – 5,000 m²</p>
+          <p class="input-hint">Sugerido: 50 – 5,000 m²</p>
         </div>
 
         <!-- Costo -->
-        <div class="mb-8">
+        <div class="mb-6">
           <label class="input-label">
-            Costo de instalación (COP)
+            Costo estimado de la instalación (COP)
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Inversión inicial total estimada</span>
+              ⓘ<span class="tip">Costo de la inversión inicial total estimada</span>
             </span>
           </label>
           <input type="number" id="costo_instalacion" value="150000000" min="1000000" step="1000000"
+                 inputmode="numeric"
                  class="input-field" oninput="actualizarPreview()"/>
           <p class="input-hint">Aprox. $500,000 COP/m² instalado</p>
         </div>
 
-        <!-- Preview rápido -->
-        <div id="preview-box" style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.12);border-radius:14px;padding:1rem;margin-bottom:1.5rem;">
-          <p class="text-xs text-stone-500 uppercase tracking-wider mb-3">Vista previa estimada</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <p id="prev-energia" class="text-sm font-bold" style="color:var(--amber);">—</p>
-              <p class="text-xs text-stone-600">kWh / año</p>
-            </div>
-            <div>
-              <p id="prev-ahorro" class="text-sm font-bold" style="color:var(--amber);">—</p>
-              <p class="text-xs text-stone-600">Ahorro / año</p>
-            </div>
-          </div>
-        </div>
-
         <!-- Error -->
-        <div id="errorMsg" class="hidden mb-4 text-sm text-red-400 bg-red-950/40
-             border border-red-900/50 rounded-xl px-4 py-3"></div>
+        <div id="errorMsg"
+             class="hidden mb-4 text-sm text-red-400 bg-red-950/40
+                    border border-red-900/50 rounded-xl px-4 py-3"></div>
 
-        <!-- Botón -->
-        <button id="btnCalcular" onclick="calcular()" class="btn-primary w-full justify-center text-base py-4">
+        <!-- Botón calcular -->
+        <button id="btnCalcular" onclick="calcular()"
+                class="btn-primary w-full justify-center text-base py-3.5">
           <span id="btn-text">Calcular viabilidad</span>
           <div id="spinner" class="spinner"></div>
           <svg id="btn-arrow" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -381,15 +394,15 @@
       </div>
 
       <!-- Datos técnicos usados -->
-      <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:1.25rem;margin-top:1rem;">
-        <p class="text-xs text-stone-600 uppercase tracking-wider mb-3">Datos aplicados (Bogotá)</p>
+      <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:1.1rem;">
+        <p class="text-xs text-stone-600 uppercase tracking-wider mb-2.5">Datos aplicados · Bogotá</p>
         <div class="space-y-2">
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Radiación solar</span>
+            <span class="text-stone-500">Radiación solar (IDEAM)</span>
             <span style="color:var(--amber);">3.5 kWh/m²/día</span>
           </div>
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Eficiencia paneles</span>
+            <span class="text-stone-500">Eficiencia de paneles</span>
             <span style="color:var(--amber);">18%</span>
           </div>
           <div class="flex justify-between text-xs">
@@ -397,105 +410,115 @@
             <span style="color:var(--amber);">800 COP/kWh</span>
           </div>
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Fuente</span>
-            <span class="text-stone-600">IDEAM · DANE · IRENA</span>
+            <span class="text-stone-500">Tasa de interés</span>
+            <span style="color:var(--amber);">12% anual</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-stone-500">Vida útil</span>
+            <span style="color:var(--amber);">20 años</span>
           </div>
         </div>
       </div>
+
     </div>
 
-    <!-- COLUMNA DERECHA: RESULTADOS -->
+
+    <!--  RESULTADOS en columna derecha  -->
     <div id="col-resultados">
 
       <!-- Estado vacío -->
-      <div id="estado-vacio" class="flex flex-col items-center justify-center text-center py-24">
-        <div style="width:90px;height:90px;border-radius:50%;
-             background:radial-gradient(circle,rgba(245,158,11,.15),transparent);
-             display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;
+      <div id="estado-vacio" class="flex flex-col items-center justify-center text-center py-20">
+        <div style="width:80px;height:80px;border-radius:50%;
+             background:radial-gradient(circle,rgba(245,158,11,.12),transparent);
+             display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;
              border:1px solid rgba(245,158,11,.1);">
-          <svg class="w-10 h-10" style="color:rgba(245,158,11,.7);" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <svg class="w-9 h-9" style="color:rgba(245,158,11,.6);" fill="none"
+               stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="4"/>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
           </svg>
         </div>
-        <h3 class="text-xl font-bold text-stone-500 mb-2">Ingresa los parámetros</h3>
+        <h3 class="text-lg font-bold text-stone-500 mb-2">Ingresa los parámetros</h3>
         <p class="text-stone-600 text-sm max-w-xs">
           Completa el formulario y haz clic en "Calcular viabilidad" para ver el análisis completo.
         </p>
       </div>
 
-      <!-- Resultados (oculto inicialmente) -->
-      <div id="resultados" class="hidden space-y-8">
+      <!-- Resultados -->
+      <div id="resultados" class="hidden space-y-6">
 
-        <!-- Header de resultados -->
-        <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Header -->
+        <div class="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p class="text-xs text-stone-500 uppercase tracking-wider mb-1">Análisis completado · Bogotá</p>
+            <p class="text-xs text-stone-500 uppercase tracking-wider mb-1">
+              Análisis completado · Bogotá
+            </p>
             <h2 class="text-2xl font-bold playfair">Resultados del proyecto</h2>
           </div>
           <div id="badge-viable"></div>
         </div>
 
-        <!-- KPIs -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="kpi-grid"></div>
+        <!-- KPIs - 6 tarjetas con colores semánticos -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="kpi-grid"></div>
 
-        <!-- GRÁFICOS -->
-        <div>
-          <!-- Tabs -->
-          <div class="flex gap-2 mb-5" style="border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:.75rem;">
+        <!-- Gráficos con tabs -->
+        <div class="chart-box">
+          <!-- Tabs - scroll horizontal en móvil -->
+          <div class="tabs-wrap mb-5">
             <button class="tab-btn active" onclick="switchTab('vpn')">VP Acumulado</button>
-            <button class="tab-btn" onclick="switchTab('ahorro')">Ahorro vs Pago normal</button>
+            <button class="tab-btn" onclick="switchTab('ahorro')">Ahorro vs Costo solar</button>
             <button class="tab-btn" onclick="switchTab('energia')">Energía anual</button>
           </div>
 
-          <!-- Chart VP Acumulado -->
-          <div id="tab-vpn" class="chart-box">
-            <p class="chart-title">Valor Presente Acumulado en el tiempo (COP)</p>
-            <p class="text-xs text-stone-600 mb-4">
-              La línea cruza cero en el <strong style="color:var(--amber)">período de recuperación</strong>.
-              A partir de ese punto, el proyecto genera valor neto.
+          <!-- Tab VP Acumulado -->
+          <div id="tab-vpn">
+            <p class="chart-desc">
+              Valor Presente Neto acumulado año a año (COP).
+              La línea verde punteada es el cero, el cruce marca el
+              <strong style="color:var(--c-blue)">período de recuperación</strong>.
             </p>
-            <div style="position:relative;height:280px;">
+            <div style="position:relative;height:260px;">
               <canvas id="chart-vpn-acum"></canvas>
             </div>
           </div>
 
-          <!-- Chart Ahorro vs Pago normal -->
-          <div id="tab-ahorro" class="chart-box hidden">
-            <p class="chart-title">Ahorro acumulado solar vs. pago acumulado a red eléctrica (COP)</p>
-            <p class="text-xs text-stone-600 mb-4">
-              Comparativa directa: cuánto pagarías a la red eléctrica sin paneles versus
-              el costo total del sistema solar en el tiempo. El cruce de líneas es el punto de equilibrio.
+          <!-- Tab Gasto vs Costo Inicial-->
+          <div id="tab-ahorro" class="hidden">
+            <p class="chart-desc">
+              Pago acumulado a la empresa de red eléctrica (rojo) versus
+              el costo fijo del sistema solar (azul). El cruce de las líneas
+              es el <strong style="color:var(--c-blue)">punto de equilibrio</strong>.
             </p>
-            <div style="position:relative;height:280px;">
+            <div style="position:relative;height:260px;">
               <canvas id="chart-comparativo"></canvas>
             </div>
           </div>
 
-          <!-- Chart Energía -->
-          <div id="tab-energia" class="chart-box hidden">
-            <p class="chart-title">Energía generada por año (kWh) — efecto de la degradación</p>
-            <p class="text-xs text-stone-600 mb-4">
-              Los paneles fotovoltaicos pierden eficiencia gradualmente (~0.5%/año).
-              Este gráfico muestra cómo decrece la producción a lo largo del proyecto.
+          <!-- Tab Energía -->
+          <div id="tab-energia" class="hidden">
+            <p class="chart-desc">
+              Energía generada cada año (kWh). La reducción gradual refleja
+              la <strong style="color:var(--amber)">degradación anual del 0.5%</strong>
+              en la eficiencia de los paneles fotovoltaicos.
             </p>
-            <div style="position:relative;height:280px;">
+            <div style="position:relative;height:260px;">
               <canvas id="chart-energia"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- TABLA FLUJO DE CAJA -->
-        <div class="chart-box">
-          <div class="flex items-center justify-between mb-5">
-            <p class="chart-title mb-0">Flujo de caja detallado por año</p>
-            <span class="text-xs text-stone-600">
-              🟢 Verde = año de recuperación
+        <!-- Tabla flujo de caja -->
+        <div class="result-section">
+          <div class="result-section-title">
+            📅 Flujo de caja detallado
+            <span class="text-xs font-normal text-stone-600 ml-auto tracking-normal normal-case"
+                  style="letter-spacing:0">
+              🟢 Fila verde = Año de recuperación
             </span>
           </div>
-          <div class="overflow-x-auto" style="max-height:380px;overflow-y:auto;">
+          <div style="overflow-x:auto;max-height:340px;overflow-y:auto;border-radius:12px;">
             <table class="results-table">
-              <thead style="position:sticky;top:0;z-index:1;">
+              <thead>
                 <tr>
                   <th>Año</th>
                   <th>Energía (kWh)</th>
@@ -509,30 +532,30 @@
           </div>
         </div>
 
-        <!-- INTERPRETACIÓN -->
-        <div id="interpretacion" class="chart-box" style="border-color:rgba(245,158,11,.15);">
-          <div class="flex items-start gap-4">
-            <div style="font-size:2rem;line-height:1;flex-shrink:0;">💡</div>
+        <!-- Interpretación -->
+        <div class="interp-card">
+          <div class="flex items-start gap-3">
+            <div style="font-size:1.6rem;line-height:1;flex-shrink:0;">💡</div>
             <div>
-              <h3 class="font-bold mb-2">Interpretación del análisis</h3>
-              <div id="interpretacion-texto" class="text-stone-400 text-sm leading-relaxed space-y-2"></div>
+              <h3 class="font-bold text-sm mb-3 text-stone-200">Interpretación del análisis</h3>
+              <div id="interpretacion-texto" class="space-y-3"></div>
             </div>
           </div>
         </div>
 
       </div><!-- /resultados -->
-    </div><!-- /col-resultados -->
+    </div>
+
   </div>
 </main>
 
 
 <!-- FOOTER -->
-<footer class="px-6 pt-16 pb-10">
+<footer class="px-6 pt-14 pb-10 mt-10">
   <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-4 gap-10 mb-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
 
-      <!-- Brand -->
-      <div class="md:col-span-1">
+      <div class="col-span-2 md:col-span-1">
         <div class="flex items-center gap-2 mb-4">
           <div class="w-7 h-7 rounded-lg flex items-center justify-center"
                style="background:linear-gradient(135deg,#F59E0B,#EA580C);">
@@ -544,170 +567,111 @@
           <span class="font-bold text-white text-xl playfair">Red<span style="color:var(--amber);">Sua</span></span>
         </div>
         <p class="text-xs text-stone-500 leading-relaxed">
-          Simulador de viabilidad económica de paneles solares para Cundinamarca, Colombia.
-          Proyecto académico — Universidad Nacional de Colombia, 2026.
+          Simulador de viabilidad económica de paneles solares para Cundinamarca.
+          Proyecto académico - Universidad Nacional de Colombia, 2026.
         </p>
       </div>
 
-      <!-- Navegación -->
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Plataforma</h4>
-        <div class="space-y-2.5">
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-3">Plataforma</h4>
+        <div class="space-y-2">
           <a href="index.html"         class="footer-link block">Inicio</a>
           <a href="simulador.html"     class="footer-link block">Simulador</a>
           <a href="investigacion.html" class="footer-link block">Investigación</a>
         </div>
       </div>
 
-      <!-- Recursos -->
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Recursos</h4>
-        <div class="space-y-2.5">
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-3">Recursos</h4>
+        <div class="space-y-2">
           <a href="https://github.com/miguelsrz/RedSua" target="_blank" rel="noopener" class="footer-link block">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/>
             </svg>
             Repositorio GitHub
           </a>
-          <a href="https://drive.google.com/file/d/1ohoJdk2vhKSOjxCHKttlZJj_u04H1z8S/view?usp=sharing" target="_blank" class="footer-link block">
+          <a href="https://drive.google.com/file/d/1ohoJdk2vhKSOjxCHKttlZJj_u04H1z8S/view?usp=sharing"
+             target="_blank" class="footer-link block">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
             </svg>
-            Visualizar documento PDF
+            Documento PDF
           </a>
-          <a href="https://www.andi.com.co/uploads/radiacion.compressed.pdf" target="_blank" rel="noopener" class="footer-link block">
+          <a href="https://www.andi.com.co/uploads/radiacion.compressed.pdf"
+             target="_blank" rel="noopener" class="footer-link block">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
             Atlas Solar IDEAM
           </a>
-          <a href="https://www.dane.gov.co/files/operaciones/CAE-FE/bol-CAE-FE-2023p.pdf" target="_blank" rel="noopener" class="footer-link block">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-            Datos DANE
-          </a>
         </div>
       </div>
 
-      <!-- Equipo -->
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">Equipo de Trabajo</h4>
-        <div class="space-y-1.5 text-xs text-stone-500">
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-3">Equipo de Trabajo</h4>
+        <div class="space-y-1 text-xs text-stone-500">
           <p>M. Suarez  · H. Rodriguez</p>
           <p>S. Alape   · S. Cardenas</p>
           <p>J. Palacio · S. Parra</p>
         </div>
-       
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
-         style="border-top:1px solid rgba(255,255,255,0.05);">
+    <div class="pt-7 flex flex-col sm:flex-row justify-between items-center gap-3"
+         style="border-top:1px solid rgba(255,255,255,.05);">
       <p class="text-xs text-stone-600">
         2026 RedSua · Universidad Nacional de Colombia · Ingeniería Económica 2026-1S
       </p>
-      <p class="text-xs text-stone-700">
-        Datos: IDEAM · DANE · Minenergia · IRENA
-      </p>
+      <p class="text-xs text-stone-700">Datos: IDEAM · DANE · Minenergia · IRENA</p>
     </div>
   </div>
 </footer>
-<!-- SCRIPTS -->
+
+
+<!-- SCRIPTS-->
 <script src="./js/simulador.js"></script>
 <script>
-// Datos fijos de Bogotá para la vista previa (calculados en frontend, sin API)
-const BOGOTA = { radiacion: 3.5, eficiencia: 0.18, tarifa: 800 };
+  // Chart.js - tema oscuro global 
+  Chart.defaults.color       = '#78716C';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+  Chart.defaults.font.family = 'DM Sans';
+  Chart.defaults.font.size   = 11;
 
-// Chart.js defaults — tema oscuro
-Chart.defaults.color         = '#78716C';
-Chart.defaults.borderColor   = 'rgba(255,255,255,0.05)';
-Chart.defaults.font.family   = 'DM Sans';
-Chart.defaults.font.size     = 11;
-
-// Instancias de gráficos (para destruir antes de recrear)
-let chartVPN = null, chartComp = null, chartEnerg = null;
-
-
-// NAVBAR SCROLL
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// MOBILE MENU
-function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('hidden');
-  document.getElementById('icon-open').classList.toggle('hidden');
-  document.getElementById('icon-close').classList.toggle('hidden');
-}
-
-// VISTA PREVIA (cálculo local sin API)
-function actualizarPreview() {
-  const area = parseFloat(document.getElementById('area_m2').value) || 0;
-  const energia = area * BOGOTA.radiacion * 365 * BOGOTA.eficiencia;
-  const ahorro  = energia * BOGOTA.tarifa;
-  document.getElementById('prev-energia').textContent = energia > 0 ? num(energia) : '—';
-  document.getElementById('prev-ahorro').textContent  = ahorro  > 0 ? cop(ahorro)  : '—';
-}
-actualizarPreview();
-
-// TABS
-function switchTab(tab) {
-  ['vpn','ahorro','energia'].forEach(t => {
-    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+  // Navbar scroll 
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar')
+      .classList.toggle('scrolled', window.scrollY > 40);
   });
-  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', ['vpn','ahorro','energia'][i] === tab);
-  });
-}
 
-// CHART OPTIONS
-function chartOptions(unidad, isCOP) {
-  const fmt = v => isCOP
-    ? (Math.abs(v) >= 1e9 ? `$${(v/1e9).toFixed(1)}B` : Math.abs(v) >= 1e6 ? `$${(v/1e6).toFixed(0)}M` : cop(v))
-    : num(v);
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: { mode:'index', intersect:false },
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { padding:16, boxWidth:12, usePointStyle:true }
-      },
-      tooltip: {
-        backgroundColor: '#1C1917',
-        borderColor: 'rgba(245,158,11,0.2)',
-        borderWidth: 1,
-        padding: 10,
-        callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)} ${unidad}`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color:'rgba(255,255,255,0.04)' },
-        ticks: { maxTicksLimit:10 }
-      },
-      y: {
-        grid: { color:'rgba(255,255,255,0.04)' },
-        ticks: {
-          callback: v => isCOP
-            ? (Math.abs(v) >= 1e6 ? `$${(v/1e6).toFixed(0)}M` : cop(v))
-            : num(v)
-        }
-      }
-    }
-  };
-}
+  // Mobile menu 
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+    document.getElementById('icon-open').classList.toggle('hidden');
+    document.getElementById('icon-close').classList.toggle('hidden');
+  }
 
-// SCROLL REVEAL
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Tabs 
+  function switchTab(tab) {
+    ['vpn', 'ahorro', 'energia'].forEach(t => {
+      document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+    });
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', ['vpn', 'ahorro', 'energia'][i] === tab);
+    });
+  }
+
+  // Scroll reveal 
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  //  Init preview 
 </script>
 
 </body>

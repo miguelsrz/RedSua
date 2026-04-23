@@ -6,7 +6,7 @@ from calculos import calcular_viabilidad
 ALLOWED_ORIGIN = "https://redsua.co"
 
 HEADERS = {
-    "Access-Control-Allow-Origin":  "*",
+    "Access-Control-Allow-Origin":  ALLOWED_ORIGIN,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type":                 "application/json",
@@ -18,6 +18,11 @@ def resp(status: int, body: dict) -> dict:
 
 
 def lambda_handler(event, context):
+
+    header = event.get("headers", {}).get("headerabc")
+    if header != '[#+PN1o8[&m{[7%!':
+            return resp(403, {"error": "Acceso denegado"})
+    
 
     # Preflight CORS
     if event.get("requestContext", {}).get("http", {}).get("method") == "OPTIONS":
