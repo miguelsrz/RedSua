@@ -1,2 +1,101 @@
-ciudad,radiacion_kwh_m2_dia,tarifa_kwh_cop,eficiencia_paneles
-Bogota,3.5,800,0.18
+ciudad,grupo,radiacion_kwh_m2_dia,tarifa_kwh_cop,eficiencia_paneles
+Bogota,1,3.6,900,0.20
+Soacha,1,3.6,900,0.20
+Chia,1,3.6,900,0.20
+Cajica,1,3.6,900,0.20
+Zipaquira,1,3.6,900,0.20
+Tocancipa,1,3.6,900,0.20
+Gachancipa,1,3.6,900,0.20
+Cogua,1,3.6,900,0.20
+Nemocon,1,3.6,900,0.20
+Sopo,1,3.6,900,0.20
+Tabio,1,3.6,900,0.20
+Tenjo,1,3.6,900,0.20
+Cota,1,3.6,900,0.20
+Funza,1,3.6,900,0.20
+Mosquera,1,3.6,900,0.20
+Madrid,1,3.6,900,0.20
+Facatativa,1,3.6,900,0.20
+El Rosal,1,3.6,900,0.20
+Subachoque,1,3.6,900,0.20
+Bojaca,1,3.6,900,0.20
+Fusagasuga,2,4.2,870,0.20
+Silvania,2,4.2,870,0.20
+Granada,2,4.2,870,0.20
+Pasca,2,4.2,870,0.20
+Arbelaez,2,4.2,870,0.20
+San Bernardo,2,4.2,870,0.20
+Cabrera,2,4.2,870,0.20
+Pandi,2,4.2,870,0.20
+Venecia,2,4.2,870,0.20
+Tibacuy,2,4.2,870,0.20
+Nilo,2,4.2,870,0.20
+Ricaurte,2,4.2,870,0.20
+Guataqui,2,4.2,870,0.20
+Jerusalen,2,4.2,870,0.20
+Tena,2,4.2,870,0.20
+La Vega,2,4.2,870,0.20
+Villeta,2,4.2,870,0.20
+Nimaima,2,4.2,870,0.20
+Sasaima,2,4.2,870,0.20
+Alban,2,4.2,870,0.20
+Viani,2,4.2,870,0.20
+Guayabal de Siquima,2,4.2,870,0.20
+Utica,2,4.2,870,0.20
+Quebradanegra,2,4.2,870,0.20
+Nocaima,2,4.2,870,0.20
+Supata,2,4.2,870,0.20
+La Pena,2,4.2,870,0.20
+Pacho,2,4.2,870,0.20
+Villagomez,2,4.2,870,0.20
+Yacopi,2,4.2,870,0.20
+Vergara,2,4.2,870,0.20
+Topaipi,2,4.2,870,0.20
+Girardot,3,5.0,850,0.20
+Agua de Dios,3,5.0,850,0.20
+Anapoima,3,5.0,850,0.20
+La Mesa,3,5.0,850,0.20
+Tocaima,3,5.0,850,0.20
+Apulo,3,5.0,850,0.20
+Viota,3,5.0,850,0.20
+Lenguazaque,4,4.2,880,0.20
+Ubate,4,4.2,880,0.20
+Sutatausa,4,4.2,880,0.20
+Cucunuba,4,4.2,880,0.20
+Simijaca,4,4.2,880,0.20
+Susa,4,4.2,880,0.20
+Fuquene,4,4.2,880,0.20
+Guacheta,4,4.2,880,0.20
+Carmen de Carupa,4,4.2,880,0.20
+Tausa,4,4.2,880,0.20
+Villapinzon,4,4.2,880,0.20
+Choconta,4,4.2,880,0.20
+Macheta,4,4.2,880,0.20
+Tibirita,4,4.2,880,0.20
+Manta,4,4.2,880,0.20
+Sesquile,4,4.2,880,0.20
+Guatavita,4,4.2,880,0.20
+La Calera,4,4.2,880,0.20
+Choachi,4,4.2,880,0.20
+Ubaque,4,4.2,880,0.20
+Fomeque,4,4.2,880,0.20
+Gachala,4,4.2,880,0.20
+Gama,4,4.2,880,0.20
+Junin,4,4.2,880,0.20
+Guasca,4,4.2,880,0.20
+Medina,4,4.2,880,0.20
+Paratebueno,4,4.2,880,0.20
+Caqueza,4,4.2,880,0.20
+Chipaque,4,4.2,880,0.20
+Une,4,4.2,880,0.20
+Fosca,4,4.2,880,0.20
+Quetame,4,4.2,880,0.20
+Gutierrez,4,4.2,880,0.20
+Puli,4,4.2,880,0.20
+San Juan de Rioseco,4,4.2,880,0.20
+Beltran,4,4.2,880,0.20
+Bituima,4,4.2,880,0.20
+Caparrapi,4,4.2,880,0.20
+Chaguani,4,4.2,880,0.20
+Guaduas,4,4.2,880,0.20
+Puerto Salgar,4,4.2,880,0.20

@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    /*  TOKENS  */
+    /* TOKENS  */
     :root {
       --amber:   #F59E0B;
       --amber-d: #D97706;
@@ -21,7 +21,6 @@
       --dark2:   #1C1917;
       --dark3:   #292524;
       --muted:   #A8A29E;
-      /* Paleta semántica para resultados */
       --c-green:   #6EE7B7;
       --c-green-bg:rgba(16,185,129,.07);
       --c-green-br:rgba(16,185,129,.22);
@@ -34,208 +33,182 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--dark);
-      color: #E7E5E4;
-      overflow-x: hidden;
-    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: #E7E5E4; overflow-x: hidden; }
     h1,h2,h3,.playfair { font-family:'Playfair Display',serif; }
 
     /*  NAVBAR  */
-    #navbar {
-      position:fixed; top:0; left:0; right:0; z-index:100;
-      transition:background .4s,backdrop-filter .4s,box-shadow .4s;
-    }
-    #navbar.scrolled {
-      background:rgba(12,10,9,.92);
-      backdrop-filter:blur(12px);
-      box-shadow:0 1px 0 rgba(245,158,11,.15);
-    }
-    .nav-link {
-      position:relative; font-size:.875rem; font-weight:500;
-      color:#D6D3D1; letter-spacing:.03em; transition:color .2s; text-decoration:none;
-    }
-    .nav-link::after {
-      content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
-      background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .3s;
-    }
+    #navbar { position:fixed; top:0; left:0; right:0; z-index:100; transition:background .4s,backdrop-filter .4s,box-shadow .4s; }
+    #navbar.scrolled { background:rgba(12,10,9,.92); backdrop-filter:blur(12px); box-shadow:0 1px 0 rgba(245,158,11,.15); }
+    .nav-link { position:relative; font-size:.875rem; font-weight:500; color:#D6D3D1; letter-spacing:.03em; transition:color .2s; text-decoration:none; }
+    .nav-link::after { content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px; background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
     .nav-link:hover { color:var(--amber-l); }
     .nav-link:hover::after { transform:scaleX(1); }
 
     /*  BOTONES  */
-    .btn-primary {
-      display:inline-flex; align-items:center; gap:.5rem;
-      background:linear-gradient(135deg,var(--amber),var(--amber-d));
-      color:#0C0A09; font-weight:700; font-size:.9rem;
-      padding:.85rem 2rem; border-radius:12px; text-decoration:none;
-      border:none; cursor:pointer;
-      transition:transform .2s,box-shadow .2s,opacity .2s;
-    }
+    .btn-primary { display:inline-flex; align-items:center; gap:.5rem; background:linear-gradient(135deg,var(--amber),var(--amber-d)); color:#0C0A09; font-weight:700; font-size:.9rem; padding:.85rem 2rem; border-radius:12px; text-decoration:none; border:none; cursor:pointer; transition:transform .2s,box-shadow .2s,opacity .2s; }
     .btn-primary:hover  { transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,158,11,.35); }
     .btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
 
-    /*  GRADIENTS  */
-    .gradient-text {
-      background:linear-gradient(135deg,var(--amber-l),var(--orange));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    .amber-line {
-      display:inline-block; width:48px; height:3px;
-      background:linear-gradient(90deg,var(--amber),var(--orange)); border-radius:2px;
-    }
-    .solar-badge {
-      display:inline-flex; align-items:center; gap:.5rem;
-      background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25);
-      border-radius:999px; padding:.4rem 1.1rem; font-size:.78rem; font-weight:600;
-      color:var(--amber); letter-spacing:.06em; text-transform:uppercase;
-    }
+    /*  GRADIENTES & DECORACIÓN  */
+    .gradient-text { background:linear-gradient(135deg,var(--amber-l),var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .solar-badge { display:inline-flex; align-items:center; gap:.5rem; background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25); border-radius:999px; padding:.4rem 1.1rem; font-size:.78rem; font-weight:600; color:var(--amber); letter-spacing:.06em; text-transform:uppercase; }
     .section-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(245,158,11,.15),transparent); }
-
-    /*  PAGE HERO  */
-    .page-hero {
-      background:linear-gradient(135deg,#1a0900 0%,#0C0A09 60%);
-      border-bottom:1px solid rgba(245,158,11,.1);
-    }
+    .page-hero { background:linear-gradient(135deg,#1a0900 0%,#0C0A09 60%); border-bottom:1px solid rgba(245,158,11,.1); }
 
     /*  FORMULARIO  */
-    .form-card {
-      background:var(--dark2); border:1px solid rgba(255,255,255,.07);
-      border-radius:24px; padding:2rem;
-    }
-    .input-label {
-      display:block; font-size:.7rem; font-weight:600;
-      text-transform:uppercase; letter-spacing:.07em;
-      color:#78716C; margin-bottom:.45rem;
-    }
-    .input-field {
-      width:100%; background:var(--dark3);
-      border:1px solid rgba(255,255,255,.08); border-radius:12px;
-      padding:.7rem 1rem; font-size:.9rem; color:#E7E5E4;
-      font-family:'DM Sans',sans-serif;
-      transition:border-color .2s,box-shadow .2s; outline:none;
-      font-size: max(.9rem, 16px);
-    }
-    .input-field:focus {
-      border-color:rgba(245,158,11,.5);
-      box-shadow:0 0 0 3px rgba(245,158,11,.08);
-    }
-    .input-field:disabled { opacity:.4; cursor:not-allowed; }
+    .form-card { background:var(--dark2); border:1px solid rgba(255,255,255,.07); border-radius:24px; padding:2rem; }
+    .input-label { display:block; font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:#78716C; margin-bottom:.45rem; }
+    .input-field { width:100%; background:var(--dark3); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:.7rem 1rem; font-size:max(.9rem,16px); color:#E7E5E4; font-family:'DM Sans',sans-serif; transition:border-color .2s,box-shadow .2s; outline:none; }
+    .input-field:focus { border-color:rgba(245,158,11,.5); box-shadow:0 0 0 3px rgba(245,158,11,.08); }
     .input-hint { font-size:.68rem; color:#57534E; margin-top:.3rem; }
 
-    /* Tooltip */
-    .info-tooltip { position:relative; display:inline-flex; align-items:center; cursor:help; }
-    .info-tooltip .tip {
-      position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%);
-      background:var(--dark3); border:1px solid rgba(245,158,11,.2);
-      border-radius:8px; padding:.45rem .7rem; font-size:.68rem; color:#D6D3D1;
-      white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s; z-index:10;
+    /*  DROPDOWN PERSONALIZADO  */
+    .dd-wrapper { position:relative; }
+    /* Campo visible: muestra la ubicación seleccionada */
+    .dd-display {
+      width:100%; background:var(--dark3);
+      border:1px solid rgba(255,255,255,.08); border-radius:12px;
+      padding:.7rem 2.5rem .7rem 1rem; font-size:max(.9rem,16px);
+      color:#E7E5E4; font-family:'DM Sans',sans-serif;
+      cursor:pointer; user-select:none; transition:border-color .2s,box-shadow .2s;
+      display:flex; align-items:center; justify-content:space-between;
     }
+    .dd-display:hover,
+    .dd-display.open { border-color:rgba(245,158,11,.5); box-shadow:0 0 0 3px rgba(245,158,11,.08); }
+    .dd-arrow { flex-shrink:0; transition:transform .2s; color:#78716C; }
+    .dd-display.open .dd-arrow { transform:rotate(180deg); }
+    /* Panel desplegable (oculto por defecto) */
+    .dd-panel {
+      display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:50;
+      background:var(--dark3); border:1px solid rgba(245,158,11,.25);
+      border-radius:12px; overflow:hidden;
+      box-shadow:0 16px 40px rgba(0,0,0,.5);
+    }
+    .dd-panel.open { display:block; }
+    /* Buscador dentro del panel */
+    .dd-item {
+    padding: 10px 16px; /* Espacio interno para que no esté pegado */
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--muted);
+    border-radius: 4px;
+    }
+
+    .dd-item:hover {
+        background: rgba(245, 158, 11, 0.1); /* Color ámbar suave al pasar el mouse */
+        color: var(--amber);
+    }
+
+    .dd-search {
+      width:100%; background:transparent;
+      border:none; border-bottom:1px solid rgba(255,255,255,.07);
+      padding:.6rem 1rem; font-size:max(.85rem,16px);
+      color:#E7E5E4; font-family:'DM Sans',sans-serif; outline:none;
+    }
+    .dd-search::placeholder { color:#57534E; }
+    /* Lista de opciones */
+    .dd-list { max-height:180px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:rgba(245,158,11,.2) transparent; }
+    .dd-list::-webkit-scrollbar { width:4px; }
+    .dd-list::-webkit-scrollbar-thumb { background:rgba(245,158,11,.2); border-radius:2px; }
+    .dd-option {
+      padding:.55rem 1rem; font-size:.9rem; color:#D6D3D1;
+      cursor:pointer; transition:background .15s,color .15s;
+    }
+    .dd-option:hover  { background:rgba(245,158,11,.1); color:#E7E5E4; }
+    .dd-option.active { background:rgba(245,158,11,.15); color:var(--amber); font-weight:600; }
+
+    /*  TOOLTIP  */
+    .info-tooltip { position:relative; display:inline-flex; align-items:center; cursor:help; }
+    .info-tooltip .tip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--dark3); border:1px solid rgba(245,158,11,.2); border-radius:8px; padding:.45rem .7rem; font-size:.68rem; color:#D6D3D1; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s; z-index:10; }
     .info-tooltip:hover .tip { opacity:1; }
 
-    /* Preview box */
-    .preview-box {
-      background:rgba(245,158,11,.05); border:1px solid rgba(245,158,11,.12);
-      border-radius:14px; padding:1rem;
-    }
-    .preview-val {
-      font-size:.95rem; font-weight:700; color:var(--amber);
-      font-family:'Playfair Display',serif;
-    }
-
-    /* Spinner */
-    .spinner {
-      width:18px; height:18px; border-radius:50%;
-      border:2px solid rgba(245,158,11,.2); border-top-color:var(--amber);
-      animation:spin .7s linear infinite; display:none; flex-shrink:0;
-    }
+    /*  SPINNER  */
+    .spinner { width:18px; height:18px; border-radius:50%; border:2px solid rgba(245,158,11,.2); border-top-color:var(--amber); animation:spin .7s linear infinite; display:none; flex-shrink:0; }
     @keyframes spin { to { transform:rotate(360deg); } }
 
+    /*  PANEL AVANZADO  */
+    #toggle-avanzado { width:100%; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:.65rem 1rem; font-size:.78rem; color:#78716C; cursor:pointer; text-align:left; transition:background .2s,color .2s; }
+    #toggle-avanzado:hover { background:rgba(245,158,11,.05); color:var(--amber); }
+    .avanzado-warning { display:flex; align-items:flex-start; gap:.5rem; background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.15); border-radius:10px; padding:.65rem .9rem; font-size:.72rem; color:#A8A29E; line-height:1.5; margin-bottom:1rem; }
+
     /*  KPI GRID  */
-    .kpi-card {
-      border-radius:18px; padding:1.25rem;
-      transition:transform .3s,box-shadow .3s;
-      cursor:default;
-    }
+    .kpi-card { border-radius:18px; padding:1.25rem; transition:transform .3s,box-shadow .3s; cursor:default; border:1px solid transparent; }
     .kpi-card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
-    .kpi-value {
-      font-family:'Playfair Display',serif;
-      font-weight:900; line-height:1.1;
-    }
-    .kpi-label {
-      font-size:.65rem; text-transform:uppercase; letter-spacing:.06em;
-      color:#78716C; margin-top:.3rem;
-    }
+    .kpi-value { font-family:'Playfair Display',serif; font-weight:900; line-height:1.1; }
+    .kpi-label { font-size:.65rem; text-transform:uppercase; letter-spacing:.06em; color:#78716C; margin-top:.3rem; }
 
     /*  BADGE VIABLE  */
-    .badge-viable {
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.55rem 1.25rem; border-radius:999px; font-weight:700; font-size:.85rem;
-    }
+    .badge-viable { display:inline-flex; align-items:center; gap:.5rem; padding:.55rem 1.25rem; border-radius:999px; font-weight:700; font-size:.85rem; }
     .badge-si { background:var(--c-green-bg); border:1px solid var(--c-green-br); color:var(--c-green); }
     .badge-no { background:var(--c-red-bg);   border:1px solid var(--c-red-br);   color:var(--c-red);   }
 
-    /*  SECCIONES DE RESULTADO  */
-    .result-section {
-      background:var(--dark2); border:1px solid rgba(255,255,255,.06);
-      border-radius:20px; padding:1.5rem;
-    }
-    .result-section-title {
-      font-size:.68rem; text-transform:uppercase; letter-spacing:.08em;
-      color:#78716C; font-weight:600; margin-bottom:1rem;
-      display:flex; align-items:center; gap:.6rem;
-    }
-    .result-section-title::after {
-      content:''; flex:1; height:1px; background:rgba(255,255,255,.05);
-    }
+    /*  SECCIONES RESULTADO  */
+    .result-section { background:var(--dark2); border:1px solid rgba(255,255,255,.06); border-radius:20px; padding:1.5rem; }
+    .result-section-title { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:#78716C; font-weight:600; margin-bottom:1rem; display:flex; align-items:center; gap:.6rem; }
+    .result-section-title::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.05); }
 
     /*  TABS  */
-    .tabs-wrap {
-      display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.5rem;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      /* ocultar scrollbar */
-      scrollbar-width:none;
-    }
+    .tabs-wrap { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.5rem; border-bottom:1px solid rgba(255,255,255,.06); scrollbar-width:none; }
     .tabs-wrap::-webkit-scrollbar { display:none; }
-    .tab-btn {
-      white-space:nowrap; padding:.45rem 1.1rem; border-radius:8px;
-      font-size:.8rem; font-weight:500; border:1px solid transparent;
-      cursor:pointer; transition:background .2s,color .2s,border-color .2s;
-      background:transparent; color:#78716C; flex-shrink:0;
-    }
-    .tab-btn.active {
-      background:rgba(245,158,11,.12); color:var(--amber);
-      border-color:rgba(245,158,11,.2);
-    }
+    .tab-btn { white-space:nowrap; padding:.45rem 1.1rem; border-radius:8px; font-size:.8rem; font-weight:500; border:1px solid transparent; cursor:pointer; transition:background .2s,color .2s,border-color .2s; background:transparent; color:#78716C; flex-shrink:0; }
+    .tab-btn.active { background:rgba(245,158,11,.12); color:var(--amber); border-color:rgba(245,158,11,.2); }
     .tab-btn:not(.active):hover { color:#D6D3D1; }
 
     /*  TABLA  */
     .results-table { width:100%; border-collapse:collapse; font-size:.8rem; }
-    .results-table thead tr { background:rgba(245,158,11,1); position:sticky; top:0; z-index:1; }
-    .results-table th {
-      padding:.6rem .9rem; text-align:right; font-size:.67rem;
-      text-transform:uppercase; letter-spacing:.06em; color:#0B0908; font-weight:600;
-    }
+    .results-table thead tr { background:var(--amber); position:sticky; top:0; z-index:1; }
+    .results-table th { padding:.6rem .9rem; text-align:right; font-size:.67rem; text-transform:uppercase; letter-spacing:.06em; color:#0B0908; font-weight:600; }
     .results-table th:first-child { text-align:center; }
-    .results-table td {
-      padding:.55rem .9rem; text-align:right;
-      border-bottom:1px solid rgba(255,255,255,.04); color:#D6D3D1;
-    }
+    .results-table td { padding:.55rem .9rem; text-align:right; border-bottom:1px solid rgba(255,255,255,.04); color:#D6D3D1; }
     .results-table td:first-child { text-align:center; font-weight:600; color:#E7E5E4; }
     .results-table tr:hover td { background:rgba(245,158,11,.03); }
-    .row-recovered td { background:rgba(16,185,129,.06) !important; }
-    .row-recovered td { color:var(--c-green) !important; }
+    .row-recovered td { background:rgba(16,185,129,.06) !important; color:var(--c-green) !important; }
 
     /*  CHART BOX  */
     .chart-box { background:var(--dark2); border:1px solid rgba(255,255,255,.06); border-radius:20px; padding:1.5rem; }
     .chart-desc { font-size:.75rem; color:#57534E; line-height:1.5; margin-bottom:1rem; }
 
     /*  INTERPRETACIÓN  */
-    .interp-card {
-      background:rgba(245,158,11,.04); border:1px solid rgba(245,158,11,.12);
-      border-radius:20px; padding:1.5rem;
-    }
+    .interp-card { background:rgba(245,158,11,.04); border:1px solid rgba(245,158,11,.12); border-radius:20px; padding:1.5rem; }
     .interp-card .space-y-3 > p { color:#A8A29E; font-size:.85rem; line-height:1.65; }
+
+    /*  CAJA IA (Gemini)  */
+    .ia-card {
+      background: linear-gradient(135deg, rgba(99,102,241,.06) 0%, rgba(139,92,246,.04) 100%);
+      border: 1px solid rgba(139,92,246,.25);
+      border-radius: 20px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ia-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #6366F1, #8B5CF6, #A78BFA);
+    }
+    .ia-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(99,102,241,.12); border: 1px solid rgba(99,102,241,.25);
+      border-radius: 999px; padding: .25rem .75rem;
+      font-size: .68rem; font-weight: 700; color: #A78BFA;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .ia-loading-dots span {
+      display: inline-block;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #8B5CF6; margin: 0 2px;
+      animation: bounce .9s ease-in-out infinite;
+    }
+    .ia-loading-dots span:nth-child(2) { animation-delay: .15s; }
+    .ia-loading-dots span:nth-child(3) { animation-delay: .30s; }
+    @keyframes bounce { 0%,80%,100% { transform:scale(.6); opacity:.4; } 40% { transform:scale(1); opacity:1; } }
+    #ia-texto p { color:#C4B5FD; font-size:.88rem; line-height:1.7; margin-bottom:.75rem; }
+    #ia-texto p:last-child { margin-bottom:0; }
+
+    /*  DATOS TÉCNICOS  */
+    .datos-tecnicos { background:var(--dark2); border:1px solid rgba(255,255,255,.05); border-radius:18px; padding:1.1rem; }
 
     /*  SCROLL REVEAL  */
     .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease,transform .6s ease; }
@@ -243,16 +216,11 @@
 
     /*  FOOTER  */
     footer { background:#080604; border-top:1px solid rgba(245,158,11,.1); }
-    .footer-link {
-      color:var(--muted); font-size:.875rem; text-decoration:none;
-      transition:color .2s; display:flex; align-items:center; gap:.4rem;
-    }
+    .footer-link { color:var(--muted); font-size:.875rem; text-decoration:none; transition:color .2s; display:flex; align-items:center; gap:.4rem; }
     .footer-link:hover { color:var(--amber-l); }
-
-    /*  MOBILE MENU  */
     #mobile-menu { background:rgba(12,10,9,.97); backdrop-filter:blur(16px); }
 
-    /*  RESPONSIVE OVERRIDES  */
+    /*  RESPONSIVE  */
     @media (max-width: 640px) {
       .form-card { padding:1.5rem; }
       .kpi-value { font-size:1.2rem !important; }
@@ -263,7 +231,7 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!--  NAVBAR  -->
 <nav id="navbar" class="px-6 py-5 flex items-center justify-between">
   <a href="index.html" class="flex items-center gap-2.5 no-underline">
     <div class="w-8 h-8 rounded-lg flex items-center justify-center"
@@ -308,76 +276,150 @@
 </div>
 
 
-<!-- PAGE HERO -->
+<!--  PAGE HERO  -->
 <div class="page-hero pt-28 pb-14 px-6">
   <div class="max-w-6xl mx-auto">
-    <div class="solar-badge mb-5">⚡ Cálculo en la nube</div>
+    <div class="solar-badge mb-5">⚡ Cálculo en la nube · IA integrada</div>
     <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4" style="letter-spacing:-.02em;">
       Simulador de <span class="gradient-text">viabilidad solar</span>
     </h1>
     <p class="text-stone-400 text-base md:text-lg max-w-xl leading-relaxed">
-      Ingresa los datos de tu proyecto. La API calcula energía y ahorro;
-      el simulador obtiene en el cliente el VPN, período de recuperación
-      y el flujo de caja completo.
+      Selecciona tu ubicación, ingresa los datos del proyecto y obtén el análisis
+      económico completo — VPN, TIR, período de recuperación y una
+      <strong style="color:var(--amber-l)">recomendación experta con IA</strong>.
     </p>
   </div>
 </div>
 <div class="section-divider"></div>
 
 
-<!-- MAIN LAYOUT -->
+<!--  MAIN LAYOUT  -->
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
   <div class="grid lg:grid-cols-[380px_1fr] gap-8 items-start">
 
-    <!--  FORMULARIO en columna izquierda -->
+    <!--  FORMULARIO (columna izquierda, sticky)  -->
     <div class="lg:sticky lg:top-28 space-y-3 reveal">
 
       <!-- Card principal -->
       <div class="form-card">
-        <h2 class="text-xl font-bold mb-1">Parámetros</h2>
-        <p class="text-stone-500 text-sm mb-6">Todos los campos son requeridos.</p>
+        <h2 class="text-xl font-bold mb-1">Parámetros del proyecto</h2>
+        <p class="text-stone-500 text-sm mb-6">Todos los campos marcados son requeridos.</p>
 
-        <!-- Ciudad por ahora fija en Bogotá -->
+        <!-- Ubicación con buscador -->
         <div class="mb-4">
           <label class="input-label">
-            Ciudad / Municipio
+            Ubicación
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Datos de radiación solar del IDEAM</span>
+              ⓘ<span class="tip">Cundinamarca · Datos de radiación solar (IDEAM)</span>
             </span>
           </label>
-          <input type="text" value="Bogotá" disabled class="input-field"/>
-          <p class="input-hint">Cundinamarca · Más ubicaciones próximamente</p>
+          <!-- Dropdown personalizado: cerrado por defecto, abre al hacer clic -->
+          <div class="dd-wrapper" id="dd-wrapper">
+            <!-- Campo visible: muestra ubicación seleccionada -->
+            <div class="dd-display" id="dd-display" onclick="ddToggle()">
+              <span id="dd-label">Bogota</span>
+              <svg class="dd-arrow w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </div>
+            <!-- Panel oculto con buscador + lista -->
+            <div class="dd-panel" id="dd-panel">
+              <input
+                id="dd-search"
+                type="text"
+                class="dd-search"
+                placeholder="🔍 Buscar ubicación..."
+                autocomplete="off"
+              />
+              <div class="dd-list p-4" id="dd-list">
+                <!-- Opciones se renderizan via JS -->
+              </div>
+            </div>
+          </div>
+          <!-- Input oculto que el JS de calcular() leerá como "municipio" -->
+          <input type="hidden" id="municipio" value="Bogota"/>
+          <p class="input-hint">100 ubicaciones de Cundinamarca disponibles</p>
         </div>
 
-        <!-- Área -->
+        <!-- Área disponible -->
         <div class="mb-4">
           <label class="input-label">
             Área disponible (m²)
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Superficie del techo disponible para paneles</span>
+              ⓘ<span class="tip">Superficie del techo,suelo u otro disponible para paneles</span>
             </span>
           </label>
-          <input type="number" id="area_m2" value="300" min="10" max="10000" step="10"
-                 inputmode="numeric"
-                 class="input-field" oninput="actualizarPreview()"/>
+          <input type="number" id="area_m2" value="300" min="10" max="50000" step="10"
+                 inputmode="numeric" class="input-field"/>
           <p class="input-hint">Sugerido: 50 – 5,000 m²</p>
         </div>
 
-        <!-- Costo -->
-        <div class="mb-6">
+        <!-- Costo de instalación -->
+        <div class="mb-5">
           <label class="input-label">
             Costo estimado de la instalación (COP)
             <span class="info-tooltip ml-1" style="color:var(--amber);">
-              ⓘ<span class="tip">Costo de la inversión inicial total estimada</span>
+              ⓘ<span class="tip">Inversión inicial total del sistema fotovoltaico</span>
             </span>
           </label>
           <input type="number" id="costo_instalacion" value="150000000" min="1000000" step="1000000"
-                 inputmode="numeric"
-                 class="input-field" oninput="actualizarPreview()"/>
+                 inputmode="numeric" class="input-field"/>
           <p class="input-hint">Aprox. $500,000 COP/m² instalado</p>
         </div>
 
-        <!-- Error -->
+        <!-- Tasa de interés -->
+        <div class="mb-5">
+          <label class="input-label">
+            Tasa de interés anual (%)
+            <span class="info-tooltip ml-1" style="color:var(--amber);">
+              ⓘ<span class="tip">Tasa de oportunidad del capital</span>
+            </span>
+          </label>
+          <input type="number" id="tasa_interes" value="12" min="1" max="50" step="0.5"
+                 inputmode="numeric" class="input-field"/>
+          <p class="input-hint">Costo de oportunidad del capital</p>
+        </div>
+
+        <!-- Toggle parámetros experimentales -->
+        <button id="toggle-avanzado" class="mb-3">
+          ⚙️ Parámetros experimentales ▾
+        </button>
+
+        <!-- Panel experimental (oculto por defecto) -->
+        <div id="panel-avanzado" class="hidden mb-5 space-y-4">
+          <div class="avanzado-warning">
+            <span>⚠️</span>
+            <span>Solo para simulación de escenarios. Se recomienda dejar los valores por defecto.</span>
+          </div>
+
+          <!-- Eficiencia de paneles -->
+          <div>
+            <label class="input-label">
+              Eficiencia de paneles (%)
+              <span class="info-tooltip ml-1" style="color:var(--amber);">
+                ⓘ<span class="tip">Estándar: 18% actualmente</span>
+              </span>
+            </label>
+            <input type="number" id="eficiencia" value="18" min="5" max="30" step="0.5"
+                   inputmode="numeric" class="input-field"/>
+            <p class="input-hint">Recomendado: 18%</p>
+          </div>
+
+          <!-- Vida útil -->
+          <div>
+            <label class="input-label">
+              Vida útil del proyecto (años)
+              <span class="info-tooltip ml-1" style="color:var(--amber);">
+                ⓘ<span class="tip">Horizonte de evaluación (vida útil estándar: 20 años)</span>
+              </span>
+            </label>
+            <input type="number" id="anos_proyecto" value="20" min="5" max="40" step="1"
+                   inputmode="numeric" class="input-field"/>
+            <p class="input-hint">Recomendado: 20 años</p>
+          </div>
+        </div>
+
+        <!-- Mensaje de error -->
         <div id="errorMsg"
              class="hidden mb-4 text-sm text-red-400 bg-red-950/40
                     border border-red-900/50 rounded-xl px-4 py-3"></div>
@@ -391,39 +433,43 @@
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
-      </div>
+      </div><!-- /form-card -->
 
-      <!-- Datos técnicos usados -->
-      <div style="background:var(--dark2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:1.1rem;">
-        <p class="text-xs text-stone-600 uppercase tracking-wider mb-2.5">Datos aplicados · Bogotá</p>
-        <div class="space-y-2">
+      <!-- Datos técnicos aplicados (se actualizan con la respuesta) -->
+      <div class="datos-tecnicos">
+        <p class="text-xs text-stone-600 uppercase tracking-wider mb-2.5">Datos del grupo de radiación</p>
+        <div class="space-y-2" id="datos-tecnicos-grid">
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Radiación solar (IDEAM)</span>
-            <span style="color:var(--amber);">3.5 kWh/m²/día</span>
+            <span class="text-stone-500">Ubicación</span>
+            <span style="color:var(--amber);" id="dt-ciudad">—</span>
           </div>
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Eficiencia de paneles</span>
-            <span style="color:var(--amber);">18%</span>
+            <span class="text-stone-500">Radiación solar (IDEAM)</span>
+            <span style="color:var(--amber);" id="dt-radiacion">—</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-stone-500">Eficiencia aplicada</span>
+            <span style="color:var(--amber);" id="dt-eficiencia">—</span>
           </div>
           <div class="flex justify-between text-xs">
             <span class="text-stone-500">Tarifa eléctrica</span>
-            <span style="color:var(--amber);">800 COP/kWh</span>
+            <span style="color:var(--amber);" id="dt-tarifa">—</span>
           </div>
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Tasa de interés</span>
-            <span style="color:var(--amber);">12% anual</span>
+            <span class="text-stone-500">Tasa de interes</span>
+            <span style="color:var(--amber);" id="dt-tasa">—</span>
           </div>
           <div class="flex justify-between text-xs">
-            <span class="text-stone-500">Vida útil</span>
-            <span style="color:var(--amber);">20 años</span>
+            <span class="text-stone-500">Horizonte del proyecto</span>
+            <span style="color:var(--amber);" id="dt-anos">—</span>
           </div>
         </div>
       </div>
 
-    </div>
+    </div><!-- /columna izquierda -->
 
 
-    <!--  RESULTADOS en columna derecha  -->
+    <!--  RESULTADOS (columna derecha)  -->
     <div id="col-resultados">
 
       <!-- Estado vacío -->
@@ -440,65 +486,62 @@
         </div>
         <h3 class="text-lg font-bold text-stone-500 mb-2">Ingresa los parámetros</h3>
         <p class="text-stone-600 text-sm max-w-xs">
-          Completa el formulario y haz clic en "Calcular viabilidad" para ver el análisis completo.
+          Selecciona una ubicación, completa el formulario y haz clic en "Calcular viabilidad"
+          para ver el análisis completo con recomendación IA.
         </p>
       </div>
 
       <!-- Resultados -->
       <div id="resultados" class="hidden space-y-6">
 
-        <!-- Header -->
+        <!-- Header de resultados -->
         <div class="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p class="text-xs text-stone-500 uppercase tracking-wider mb-1">
-              Análisis completado · Bogotá
+            <p id="resultado-sub" class="text-xs text-stone-500 uppercase tracking-wider mb-1">
+              Análisis completado
             </p>
             <h2 class="text-2xl font-bold playfair">Resultados del proyecto</h2>
           </div>
           <div id="badge-viable"></div>
         </div>
 
-        <!-- KPIs - 6 tarjetas con colores semánticos -->
+        <!-- KPIs: 6 tarjetas (incluye TIR) -->
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="kpi-grid"></div>
 
         <!-- Gráficos con tabs -->
         <div class="chart-box">
-          <!-- Tabs - scroll horizontal en móvil -->
           <div class="tabs-wrap mb-5">
             <button class="tab-btn active" onclick="switchTab('vpn')">VP Acumulado</button>
             <button class="tab-btn" onclick="switchTab('ahorro')">Ahorro vs Costo solar</button>
             <button class="tab-btn" onclick="switchTab('energia')">Energía anual</button>
           </div>
 
-          <!-- Tab VP Acumulado -->
           <div id="tab-vpn">
             <p class="chart-desc">
-              Valor Presente Neto acumulado año a año (COP).
-              La línea verde punteada es el cero, el cruce marca el
-              <strong style="color:var(--c-blue)">período de recuperación</strong>.
+              Valor Presente Neto acumulado año a año (COP). La línea verde punteada marca
+              el cero; el cruce indica el
+              <strong style="color:var(--c-blue)">período de recuperación descontado</strong>.
             </p>
             <div style="position:relative;height:260px;">
               <canvas id="chart-vpn-acum"></canvas>
             </div>
           </div>
 
-          <!-- Tab Gasto vs Costo Inicial-->
           <div id="tab-ahorro" class="hidden">
             <p class="chart-desc">
-              Pago acumulado a la empresa de red eléctrica (rojo) versus
-              el costo fijo del sistema solar (azul). El cruce de las líneas
-              es el <strong style="color:var(--c-blue)">punto de equilibrio</strong>.
+              Pago acumulado a la red eléctrica (rojo) vs. costo fijo del sistema solar (azul).
+              El cruce de líneas es el
+              <strong style="color:var(--c-blue)">punto de equilibrio</strong> financiero.
             </p>
             <div style="position:relative;height:260px;">
               <canvas id="chart-comparativo"></canvas>
             </div>
           </div>
 
-          <!-- Tab Energía -->
           <div id="tab-energia" class="hidden">
             <p class="chart-desc">
-              Energía generada cada año (kWh). La reducción gradual refleja
-              la <strong style="color:var(--amber)">degradación anual del 0.5%</strong>
+              Energía generada cada año (kWh). La reducción gradual refleja la
+              <strong style="color:var(--amber)">degradación anual del 0.5%</strong>
               en la eficiencia de los paneles fotovoltaicos.
             </p>
             <div style="position:relative;height:260px;">
@@ -532,25 +575,25 @@
           </div>
         </div>
 
-        <!-- Interpretación -->
-        <div class="interp-card">
-          <div class="flex items-start gap-3">
-            <div style="font-size:1.6rem;line-height:1;flex-shrink:0;">💡</div>
-            <div>
-              <h3 class="font-bold text-sm mb-3 text-stone-200">Interpretación del análisis</h3>
-              <div id="interpretacion-texto" class="space-y-3"></div>
-            </div>
+        <!--  RECOMENDACIÓN IA (es Gemini)  -->
+        <div id="ia-box" class="ia-card">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="ia-badge">✨ Gemini AI</div>
+            <span class="text-xs text-stone-600">Recomendación experta en ingeniería económica</span>
           </div>
+
+          <!-- Texto de la recomendación -->
+          <div id="ia-texto" class="hidden"></div>
         </div>
 
       </div><!-- /resultados -->
-    </div>
+    </div><!-- /col-resultados -->
 
   </div>
 </main>
 
 
-<!-- FOOTER -->
+<!--  FOOTER  -->
 <footer class="px-6 pt-14 pb-10 mt-10">
   <div class="max-w-6xl mx-auto">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
@@ -628,29 +671,29 @@
 </footer>
 
 
-<!-- SCRIPTS-->
+<!--  SCRIPTS  -->
 <script src="./js/simulador.js"></script>
 <script>
-  // Chart.js - tema oscuro global 
+  // Chart.js tema oscuro global
   Chart.defaults.color       = '#78716C';
   Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
   Chart.defaults.font.family = 'DM Sans';
   Chart.defaults.font.size   = 11;
 
-  // Navbar scroll 
+  // Navbar scroll
   window.addEventListener('scroll', () => {
     document.getElementById('navbar')
       .classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Mobile menu 
+  // Mobile menu
   function toggleMenu() {
     document.getElementById('mobile-menu').classList.toggle('hidden');
     document.getElementById('icon-open').classList.toggle('hidden');
     document.getElementById('icon-close').classList.toggle('hidden');
   }
 
-  // Tabs 
+  // Tabs
   function switchTab(tab) {
     ['vpn', 'ahorro', 'energia'].forEach(t => {
       document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
@@ -660,18 +703,31 @@
     });
   }
 
-  // Scroll reveal 
+  function ddToggle() {
+    document.getElementById('dd-panel').classList.toggle('open');
+
+  }
+
+  // Scroll reveal
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  //  Init preview 
+  // Actualizar cuadro datos técnicos tras renderizar resultados
+  // Se sobrescribe renderResultados para inyectar también el panel lateral
+  const _renderOrig = renderResultados;
+  renderResultados = function(d) {
+    _renderOrig(d);
+    document.getElementById('dt-ciudad').textContent    = d.ciudad;
+    document.getElementById('dt-radiacion').textContent = `${d.radiacion} kWh/m²/día`;
+    document.getElementById('dt-eficiencia').textContent= `${(d.eficiencia * 100).toFixed(0)}%`;
+    document.getElementById('dt-tarifa').textContent    = `${d.tarifa} COP/kWh`;
+    document.getElementById('dt-tasa').textContent      = `${(d.tasa_interes * 100).toFixed(0)}% anual`;
+    document.getElementById('dt-anos').textContent      = `${d.anos_proyecto} años`;
+  };
 </script>
 
 </body>
